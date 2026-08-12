@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 
 import { HackerNewsAPIService } from '../shared/services/hackernews-api.service';
 import { User } from '../shared/models/user';
@@ -10,26 +11,41 @@ import { User } from '../shared/models/user';
   selector: 'app-user',
   standalone: false,
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
+  private _hackerNewsAPIService = inject(HackerNewsAPIService);
+  private route = inject(ActivatedRoute);
+  private _location = inject(Location);
+  private cdr = inject(ChangeDetectorRef);
+
   sub: Subscription;
   user: User;
   errorMessage = '';
 
-  constructor(
-    private _hackerNewsAPIService: HackerNewsAPIService,
-    private route: ActivatedRoute,
-    private _location: Location
-  ) {}
-
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      let userID = params['id'];
-      this._hackerNewsAPIService.fetchUser(userID).subscribe(data => {
-        this.user = data;
-      }, error => this.errorMessage = 'Could not load user ' + userID + '.');
+    this.sub = this.route.params.pipe(
+      tap(() => {
+        this.user = undefined;
+        this.errorMessage = '';
+        this.cdr.markForCheck();
+      }),
+      switchMap(params => this._hackerNewsAPIService.fetchUser(params['id']).pipe(
+        catchError(() => {
+          this.errorMessage = 'Could not load user ' + params['id'] + '.';
+          this.cdr.markForCheck();
+          return EMPTY;
+        })
+      ))
+    ).subscribe(user => {
+      this.user = user;
+      this.cdr.markForCheck();
     });
+  }
+
+  ngOnDestroy() {
+    this.sub?.unsubscribe();
   }
 
   goBack() {

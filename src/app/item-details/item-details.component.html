@@ -6,7 +6,7 @@
     <div class="mobile item-header">
       <p class="title-block">
         <span class="back-button" (click)="goBack()"></span>
-        <a *ngIf="hasUrl" class="title" href="{{item.url}}" [attr.target]="settings.openLinkInNewTab ? '_blank' : null" [attr.rel]="settings.openLinkInNewTab ? 'noopener' : null">
+        <a *ngIf="hasUrl" class="title" href="{{item.url}}" [attr.target]="settings().openLinkInNewTab ? '_blank' : null" [attr.rel]="settings().openLinkInNewTab ? 'noopener' : null">
           {{item.title}}
         </a>
         <a *ngIf="!hasUrl" class="title" [routerLink]="['/item', item.id]"
@@ -17,7 +17,7 @@
     </div>
     <div class="laptop" [class.item-header]="item.comments_count > 0 || item.type === 'job'" [class.head-margin]="item.text">
       <p *ngIf="hasUrl">
-        <a class="title" href="{{item.url}}" [attr.target]="settings.openLinkInNewTab ? '_blank' : null" [attr.rel]="settings.openLinkInNewTab ? 'noopener' : null">
+        <a class="title" href="{{item.url}}" [attr.target]="settings().openLinkInNewTab ? '_blank' : null" [attr.rel]="settings().openLinkInNewTab ? 'noopener' : null">
         {{item.title}}
         </a>
         <span *ngIf="item.domain" class="domain">({{item.domain}})</span>
@@ -51,7 +51,7 @@
     </div>
     <p class="subject" [innerHTML]="item.content"></p>
     <ul class="comment-list">
-      <li *ngFor="let comment of item.comments" >
+      <li *ngFor="let comment of item.comments; trackBy: trackById" >
         <app-comment [comment]="comment"></app-comment>
       </li>
     </ul>

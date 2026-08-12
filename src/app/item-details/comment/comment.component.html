@@ -8,7 +8,7 @@
     <div [hidden]="collapse">
       <p class="comment-text" [innerHTML]="comment.content"></p>
       <ul class="subtree">
-        <li *ngFor="let subComment of comment.comments"> 
+        <li *ngFor="let subComment of comment.comments; trackBy: trackById"> 
           <app-comment [comment]="subComment"></app-comment>
         </li>
       </ul>

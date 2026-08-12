@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 import { Settings } from '../models/settings';
 
@@ -6,21 +6,25 @@ import { Settings } from '../models/settings';
   providedIn: 'root'
 })
 export class SettingsService {
-  settings: Settings = {
+  private _settings = signal<Settings>({
     showSettings : false,
     openLinkInNewTab: localStorage.getItem("openLinkInNewTab") ? JSON.parse(localStorage.getItem("openLinkInNewTab")) : false,
     theme: 'default',
     titleFontSize: localStorage.getItem("titleFontSize") ? localStorage.getItem("titleFontSize") : '16',
     listSpacing: localStorage.getItem("listSpacing") ? localStorage.getItem("listSpacing") : '0',
-  };
+  });
+
+  // Reading this in a template registers a dependency, so OnPush components
+  // refresh automatically whenever a setting changes.
+  readonly settings = this._settings.asReadonly();
 
   darkColorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-  
+
   constructor() {
     this.subscribeToSystemPreferredColorScheme();
     this.initTheme();
   }
-  
+
   ngOnDestroy() {
     this.unSubscribeToSystemPrefferedColorScheme();
   }
@@ -34,7 +38,7 @@ export class SettingsService {
     }
     this.setTheme(theme);
   }
-  
+
   subscribeToSystemPreferredColorScheme() {
     this.darkColorSchemeMedia.addEventListener(
       'change',
@@ -45,7 +49,7 @@ export class SettingsService {
   initTheme() {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
-      this.settings.theme = savedTheme;
+      this._settings.update(settings => ({ ...settings, theme: savedTheme }));
     } else {
       this.darkColorSchemeMedia.dispatchEvent(
         new MediaQueryListEvent('change', {
@@ -64,26 +68,27 @@ export class SettingsService {
   }
 
   toggleSettings() {
-    this.settings.showSettings = !this.settings.showSettings;
+    this._settings.update(settings => ({ ...settings, showSettings: !settings.showSettings }));
   }
 
   toggleOpenLinksInNewTab() {
-    this.settings.openLinkInNewTab = !this.settings.openLinkInNewTab;
-    localStorage.setItem("openLinkInNewTab", JSON.stringify(this.settings.openLinkInNewTab));
+    const openLinkInNewTab = !this._settings().openLinkInNewTab;
+    this._settings.update(settings => ({ ...settings, openLinkInNewTab }));
+    localStorage.setItem("openLinkInNewTab", JSON.stringify(openLinkInNewTab));
   }
 
   setTheme(theme) {
-    this.settings.theme = theme;
-    localStorage.setItem("theme", this.settings.theme);
+    this._settings.update(settings => ({ ...settings, theme }));
+    localStorage.setItem("theme", theme);
   }
 
   setFont(fontSize){
-    this.settings.titleFontSize = fontSize;
-    localStorage.setItem("titleFontSize", this.settings.titleFontSize);
+    this._settings.update(settings => ({ ...settings, titleFontSize: fontSize }));
+    localStorage.setItem("titleFontSize", fontSize);
   }
 
   setSpacing(listSpace){
-    this.settings.listSpacing = listSpace;
-    localStorage.setItem("listSpacing", this.settings.listSpacing);
+    this._settings.update(settings => ({ ...settings, listSpacing: listSpace }));
+    localStorage.setItem("listSpacing", listSpace);
   }
 }
