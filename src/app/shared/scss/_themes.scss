@@ -238,6 +238,21 @@
   $theme-amoledblack-secondary-color
 );
 
+@include theme(
+  darkgreen,
+  $theme-darkgreen-body-background-color,
+  $theme-darkgreen-wrapper-background-color,
+  $theme-darkgreen-wrapper-mobile-background-color,
+  $theme-darkgreen-text-color,
+  $theme-darkgreen-text-color,
+  $theme-darkgreen-subtext-color,
+  $theme-darkgreen-header-background-color,
+  $theme-darkgreen-subtext-color,
+  $theme-darkgreen-secondary-color,
+  $theme-darkgreen-logo-inner,
+  $theme-darkgreen-border
+);
+
 /* ----------------------------------
 
   Include your new theme here as well as the settings component

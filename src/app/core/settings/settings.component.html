@@ -49,6 +49,18 @@
                             Black (AMOLED)
                         </label>
                     </div>
+                    <div>
+                        <label>
+                        <input 
+                            #darkgreen 
+                            name="theme" 
+                            type="radio" 
+                            value="darkgreen" 
+                            [checked]="settings().theme === darkgreen.value"
+                            (click)="selectTheme(darkgreen.value)" />
+                            Dark Green
+                        </label>
+                    </div>
                 </div>
                 <div class="control-section">
                     <h2>Change Font</h2>
