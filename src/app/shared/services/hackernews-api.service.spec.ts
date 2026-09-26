@@ -246,12 +246,17 @@ describe('HackerNewsAPIService', () => {
       FakeXMLHttpRequest.expectOne(`${BASE}/item/500`).flush(poll);
       await flushPromises();
 
+      // a poll é emitida antes das opções chegarem, com contagem zerada
+      expect(result.poll_votes_count).toBe(0);
+      expect(result.poll[0].points).toBe(0);
+
       const opt1 = FakeXMLHttpRequest.expectOne(`${BASE}/item/501`);
       const opt2 = FakeXMLHttpRequest.expectOne(`${BASE}/item/502`);
       opt1.flush(createPollResult({ points: 7, content: 'Sim' }));
       opt2.flush(createPollResult({ points: 3, content: 'Não' }));
       await flushPromises();
 
+      // o mesmo objeto emitido é mutado in-place quando as opções chegam
       expect(result.poll_votes_count).toBe(10);
       expect(result.poll[0]).toEqual(jasmine.objectContaining({ points: 7, content: 'Sim' }));
       expect(result.poll[1]).toEqual(jasmine.objectContaining({ points: 3, content: 'Não' }));
