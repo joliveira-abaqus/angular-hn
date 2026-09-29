@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  A progressive Hacker News client built with Angular
+  A progressive Hacker News client built with React
 </p>
 
 <p align="center">
@@ -73,16 +73,22 @@ Feel free to send me feedback on [twitter](https://twitter.com/hdjirdeh) or [fil
 
 ## Build process
 
-Note: This project has been ejected (with AOT + production settings) in order to customize Webpack configurations.
+The app is built with [Vite](https://vitejs.dev/) + React + TypeScript.
 
  - Clone or download the repo
  - `npm install`
- - `npm start` to run the application with webpack-dev-server or `npm build` to kick off a fresh build and update the output directory (`dist/`)
+ - `npm run dev` to run the dev server or `npm run build` to kick off a fresh build and update the output directory (`dist/`)
+ - `npm run preview` to serve the production build locally
 
-Note: Any Service Worker changes will not be reflected when you run the application locally in development. To test service worker changes:
- - `npm build`
- - `npm run precache` to generate the service worker file
- - `npm run static-serve` to load the application along with the service worker asset using [live-server](https://github.com/tapio/live-server)
+Note: The service worker is only generated for production builds. To test it:
+ - `npm run build`
+ - `npm run preview`
+
+## Tests
+
+ - `npm run test` — unit tests (Vitest + React Testing Library)
+ - `npm run coverage` — unit tests with a coverage report (`coverage/`)
+ - `npm run e2e` — end-to-end tests (Playwright; run `npm run e2e:install` once to install the browser)
 
 ## Contributors
 
