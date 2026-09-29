@@ -58,3 +58,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# coverage
+/coverage/
