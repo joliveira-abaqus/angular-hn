@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "6.9"
+  - '22'
 
 branches:
   only:
@@ -8,10 +8,14 @@ branches:
 
 before_script:
   - npm install -g firebase-tools
-  - npm install -g @angular/cli
+  - npx playwright install --with-deps chromium
 
 script:
+  - npm run lint
+  - npm run format:check
+  - npm test
   - npm run build
+  - npm run e2e
 
 after_success:
   - firebase use default
