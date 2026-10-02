@@ -4,7 +4,7 @@
 /dist
 /tmp
 /out-tsc
-/.angular/cache
+/dev-dist
 *.tsbuildinfo
 # Only exists if Bazel was run
 /bazel-out
@@ -52,7 +52,10 @@ pnpm-debug.log*
 .env.*
 !.env.example
 !.env.*.example
-testem.log
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
 /typings
 
 # System Files
