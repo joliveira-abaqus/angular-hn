@@ -9,6 +9,21 @@ body {
   margin: 0;
   height: 100%;
   width: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-color, #b92b27);
+  outline-offset: 3px;
 }
 
 pre {

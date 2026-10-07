@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
 import fetch from 'unfetch';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 
@@ -51,6 +51,19 @@ export class HackerNewsAPIService {
 
   fetchUser(id: string): Observable<User> {
     return this.cachedFetch<User>(`${this.baseUrl}/user/${id}`);
+  }
+
+  fetchFavorites(ids: number[]): Observable<Story[]> {
+    if (!ids || ids.length === 0) {
+      return of([]);
+    }
+    return forkJoin(
+      ids.map(id => this.fetchItemContent(id).pipe(
+        catchError(() => of(null))
+      ))
+    ).pipe(
+      map(results => results.filter(result => result !== null) as Story[])
+    );
   }
 
   /**
