@@ -1,68 +1,104 @@
 @import "../../shared/scss/media";
-@import "../../shared/scss/theme_variables";
 
-p {
-    margin: 2px 0;
+.story {
+  padding: 20px 16px 19px;
+}
 
-    @media #{$mobile-only} {
-      margin-bottom: 5px;
-      margin-top: 0;
-   }
+.story-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 7px 10px;
+}
+
+.title {
+  color: inherit;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.15px;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+}
+
+.domain {
+  max-width: 100%;
+  padding: 2px 7px;
+  border: 1px solid var(--hairline-color);
+  border-radius: 999px;
+  color: var(--muted-color);
+  font-size: 10px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin-top: 8px;
+  color: var(--muted-color);
+  font-size: 12px;
+
+  > * + *::before {
+    margin: 0 7px;
+    content: "·";
   }
 
   a {
-    cursor: pointer;
+    color: var(--muted-color);
+    font-weight: 700;
     text-decoration: none;
+
+    &:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+  }
+}
+
+.points {
+  color: var(--accent-color);
+  font-weight: 800;
+}
+
+.comments {
+  font-weight: 800 !important;
+}
+
+@media #{$mobile-only} {
+  .story {
+    padding: 17px 8px 16px;
+  }
+
+  .story-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
   }
 
   .title {
-    font-size: 16px;
-    font-family: Verdana, Geneva, sans-serif;
+    line-height: 1.4;
   }
+}
 
-  .subtext-laptop {
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
+.favorite {
+  padding: 0;
+  border: 0;
+  color: var(--muted-color);
+  background: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
 
-    a {
-      &:hover {
-        text-decoration: underline;
-      };
-    }
-    @media #{$mobile-only} {
-      display: none;
-    }
+  &:hover,
+  &.active {
+    color: var(--accent-color);
   }
-
-  .subtext-palm {
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-
-    a {
-      &:hover {
-        text-decoration: underline;
-      };
-    }
-
-    .details {
-      margin-top: 5px;
-
-      .right {
-        float: right;
-      }
-    }
-    @media #{$laptop-only} {
-      display: none;
-    }
-  }
-
-  .domain {
-    color: #696969;
-    letter-spacing: 0.5px;
-  }
-
-  .item-details {
-    padding: 10px;
-  }
+}

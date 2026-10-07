@@ -1,25 +1,40 @@
-<header>
-    <div id="header">
-      <a class="home-link" routerLink="/news/1" routerLinkActive="active" (click)="scrollTop()">
-        <div class="logo-inner"></div>
-        <img class="logo" src="assets/images/logo.svg" alt="Logo">
-      </a>
-      <div class="header-text">
-        <div class="left">
-          <span class="header-nav">
-            <a routerLink="/newest/1" routerLinkActive="active" (click)="scrollTop()">new</a>
-              |
-            <a routerLink="/show/1" routerLinkActive="active" (click)="scrollTop()">show</a>
-              |
-            <a routerLink="/ask/1" routerLinkActive="active" (click)="scrollTop()">ask</a>
-              |
-            <a routerLink="/jobs/1" routerLinkActive="active" (click)="scrollTop()">jobs</a>
-          </span>
-        </div>
-      </div>
-      <div class="info">
-        <img class="settings" src="assets/images/cog.svg" alt="Settings" (click)="toggleSettings()">
-      </div>
-    </div>
-    <app-settings *ngIf="settings().showSettings"></app-settings>
-  </header>
+<header class="site-header">
+  <a class="brand" routerLink="/news/1" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="scrollTop()">
+    <span class="brand-mark">
+      <span class="logo-inner"></span>
+      <img class="logo" src="assets/images/logo.svg" alt="">
+    </span>
+    <span class="brand-copy">
+      <strong>Hacker News</strong>
+      <small>Stories worth reading</small>
+    </span>
+  </a>
+
+  <nav class="header-nav" aria-label="Feeds">
+    <a routerLink="/newest/1" routerLinkActive="active" (click)="scrollTop()">New</a>
+    <a routerLink="/show/1" routerLinkActive="active" (click)="scrollTop()">Show</a>
+    <a routerLink="/ask/1" routerLinkActive="active" (click)="scrollTop()">Ask</a>
+    <a routerLink="/jobs/1" routerLinkActive="active" (click)="scrollTop()">Jobs</a>
+    <a *ngIf="isLoggedIn()" routerLink="/favorites" routerLinkActive="active" (click)="scrollTop()">Favorites</a>
+  </nav>
+
+  <div class="header-actions">
+    <ng-container *ngIf="authReady()">
+      <ng-container *ngIf="isLoggedIn(); else signIn">
+        <a class="account-link" routerLink="/profile" routerLinkActive="active" [title]="displayName()">
+          <span class="avatar" aria-hidden="true">{{ displayName().charAt(0).toUpperCase() }}</span>
+          <span class="account-name">{{ displayName() }}</span>
+        </a>
+        <button class="header-button" type="button" (click)="logout()">Sign out</button>
+      </ng-container>
+      <ng-template #signIn>
+        <a class="header-button" routerLink="/login" routerLinkActive="active">Sign in</a>
+      </ng-template>
+    </ng-container>
+
+    <button class="settings-button" type="button" aria-label="Open settings" (click)="toggleSettings()">
+      <img src="assets/images/cog.svg" alt="">
+    </button>
+  </div>
+</header>
+<app-settings *ngIf="settings().showSettings"></app-settings>

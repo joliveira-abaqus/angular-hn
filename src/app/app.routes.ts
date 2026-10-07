@@ -1,6 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { FeedComponent } from './feeds/feed/feed.component';
+import { FavoritesComponent } from './favorites/favorites.component';
+import { ProfileComponent } from './profile/profile.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 const feedRoutes = [{
   path: ':page',
@@ -35,7 +38,10 @@ const routes: Routes = [
     data: {feedType: 'jobs'}
   },
   {path: 'item', loadChildren: () => import('./item-details/item-details.module').then(m => m.ItemDetailsModule)},
-  {path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)}
+  {path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
+  {path: 'login', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
+  {path: 'favorites', component: FavoritesComponent, canActivate: [authGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [authGuard]}
 ];
 
 
