@@ -57,6 +57,28 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
+  get feedTitle(): string {
+    const titles: Record<string, string> = {
+      news: 'Top stories',
+      newest: 'Latest stories',
+      show: 'Show HN',
+      ask: 'Ask HN',
+      jobs: 'Jobs'
+    };
+    return titles[this.feedType] || 'Stories';
+  }
+
+  get feedDescription(): string {
+    const descriptions: Record<string, string> = {
+      news: 'The most interesting stories from the Hacker News community.',
+      newest: 'Fresh links and discussions, ordered by submission time.',
+      show: 'Things the community has built and wants to share.',
+      ask: 'Questions and conversations from the community.',
+      jobs: 'Open roles at startups funded by Y Combinator.'
+    };
+    return descriptions[this.feedType] || '';
+  }
+
   trackById(index: number, item: Story): number {
     return item.id;
   }

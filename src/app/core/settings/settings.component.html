@@ -6,9 +6,9 @@
         <div class="content">
             <div class="control-section">
                 <h2>Links</h2>
-                <input 
-                    type="checkbox" 
-                    [checked]="settings().openLinkInNewTab" 
+                <input
+                    type="checkbox"
+                    [checked]="settings().openLinkInNewTab"
                     (change)="toggleOpenLinksInNewTab()" />
                     Open links in a new tab
             </div>
@@ -17,10 +17,10 @@
                     <h2>Select a theme</h2>
                     <div>
                         <label>
-                        <input #default 
-                            name="theme" 
-                            type="radio" 
-                            value="default" 
+                        <input #default
+                            name="theme"
+                            type="radio"
+                            value="default"
                             [checked]="settings().theme === default.value"
                             (click)="selectTheme(default.value)" />
                             Default
@@ -28,25 +28,37 @@
                     </div>
                     <div>
                         <label>
-                        <input #night 
-                            name="theme" 
-                            type="radio" 
-                            value="night" 
-                            [checked]="settings().theme === night.value" 
+                        <input #night
+                            name="theme"
+                            type="radio"
+                            value="night"
+                            [checked]="settings().theme === night.value"
                             (click)="selectTheme(night.value)" />
                             Night
                         </label>
                     </div>
                     <div>
                         <label>
-                        <input 
-                            #amoledblack 
-                            name="theme" 
-                            type="radio" 
-                            value="amoledblack" 
+                        <input
+                            #amoledblack
+                            name="theme"
+                            type="radio"
+                            value="amoledblack"
                             [checked]="settings().theme === amoledblack.value"
                             (click)="selectTheme(amoledblack.value)" />
                             Black (AMOLED)
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                        <input
+                            #darkgreen
+                            name="theme"
+                            type="radio"
+                            value="darkgreen"
+                            [checked]="settings().theme === darkgreen.value"
+                            (click)="selectTheme(darkgreen.value)" />
+                            Dark Green
                         </label>
                     </div>
                 </div>
@@ -55,24 +67,24 @@
                     <div>
                         <label>
                         Font size:
-                        <input 
-                            #titleFont 
-                            min="1" 
-                            [value]="settings().titleFontSize" 
-                            name="theme" 
-                            type="number" 
+                        <input
+                            #titleFont
+                            min="1"
+                            [value]="settings().titleFontSize"
+                            name="theme"
+                            type="number"
                             (keyup)="changeTitleFont(titleFont.value)" />
                         </label>
                     </div>
                     <div>
                         <label>
                         List spacing:
-                        <input 
-                            #listSpacing 
-                            min="0" 
-                            [value]="settings().listSpacing" 
-                            name="theme" 
-                            type="number" 
+                        <input
+                            #listSpacing
+                            min="0"
+                            [value]="settings().listSpacing"
+                            name="theme"
+                            type="number"
                             (keyup)="changeSpacing(listSpacing.value)" />
                         </label>
                     </div>
