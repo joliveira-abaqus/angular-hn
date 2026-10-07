@@ -22,6 +22,14 @@
   $border
 ) {
   .#{$name} {
+    --accent-color: #{$secondary-link-color};
+    --header-color: #{$header-background-color};
+    --surface-color: #{$wrapper-background-color};
+    --text-color: #{$wrapper-color};
+    --muted-color: #{$subtext-color};
+    --hairline-color: color-mix(in srgb, #{$subtext-color} 24%, transparent);
+    --hover-color: color-mix(in srgb, #{$secondary-link-color} 8%, transparent);
+
     .body-cover {
       background: $body-background-color;
 
@@ -236,6 +244,21 @@
   $theme-amoledblack-secondary-color,
   $theme-amoledblack-body-background-color,
   $theme-amoledblack-secondary-color
+);
+
+@include theme(
+  darkgreen,
+  $theme-darkgreen-body-background-color,
+  $theme-darkgreen-wrapper-background-color,
+  $theme-darkgreen-wrapper-mobile-background-color,
+  $theme-darkgreen-text-color,
+  $theme-darkgreen-text-color,
+  $theme-darkgreen-subtext-color,
+  $theme-darkgreen-header-background-color,
+  $theme-darkgreen-subtext-color,
+  $theme-darkgreen-secondary-color,
+  $theme-darkgreen-logo-inner,
+  $theme-darkgreen-border
 );
 
 /* ----------------------------------
