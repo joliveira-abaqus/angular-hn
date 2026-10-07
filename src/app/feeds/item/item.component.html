@@ -14,5 +14,8 @@
     <span *ngIf="item.type !== 'job'">by <a [routerLink]="['/user', item.user]" routerLinkActive="active">{{ item.user }}</a></span>
     <span>{{ item.time_ago }}</span>
     <a *ngIf="item.type !== 'job'" class="comments" [routerLink]="['/item', item.id]" routerLinkActive="active">{{ item.comments_count | comment }}</a>
+    <button *ngIf="isLoggedIn()" class="favorite" type="button" [class.active]="isFavorite" [attr.aria-pressed]="isFavorite" (click)="toggleFavorite()">
+      {{ isFavorite ? '★ Saved' : '☆ Save' }}
+    </button>
   </div>
 </article>

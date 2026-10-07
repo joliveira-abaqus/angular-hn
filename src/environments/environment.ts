@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // Projeto "demo-*" do Firebase: funciona apenas com o Auth Emulator local (npm run emulators).
+  firebase: {
+    apiKey: 'demo-api-key',
+    authDomain: 'demo-angular-hn.firebaseapp.com',
+    projectId: 'demo-angular-hn',
+    appId: 'demo-app-id'
+  },
+  authEmulatorUrl: 'http://127.0.0.1:9099'
 };
 
 /*

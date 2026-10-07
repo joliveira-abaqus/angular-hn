@@ -1,0 +1,25 @@
+<main class="main-content">
+  <app-loader *ngIf="!items() && !errorMessage()"></app-loader>
+  <app-error-message [message]="errorMessage()" *ngIf="!items() && errorMessage() !== ''"></app-error-message>
+
+  <section *ngIf="items() as items" aria-labelledby="favorites-title">
+    <div class="feed-header">
+      <div>
+        <span class="eyebrow">Hacker News · Account</span>
+        <h1 id="favorites-title">Favorites</h1>
+        <p>Stories you saved to read later.</p>
+      </div>
+      <span class="story-count">{{ items.length }} stories</span>
+    </div>
+
+    <p class="empty-state" *ngIf="items.length === 0">
+      No favorites yet. Tap the ☆ next to a story to save it here.
+    </p>
+
+    <ol class="story-list" *ngIf="items.length > 0">
+      <li *ngFor="let item of items; trackBy: trackById" class="post">
+        <item class="item-block" [item]="item"></item>
+      </li>
+    </ol>
+  </section>
+</main>

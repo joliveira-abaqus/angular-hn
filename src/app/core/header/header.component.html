@@ -15,10 +15,26 @@
     <a routerLink="/show/1" routerLinkActive="active" (click)="scrollTop()">Show</a>
     <a routerLink="/ask/1" routerLinkActive="active" (click)="scrollTop()">Ask</a>
     <a routerLink="/jobs/1" routerLinkActive="active" (click)="scrollTop()">Jobs</a>
+    <a *ngIf="isLoggedIn()" routerLink="/favorites" routerLinkActive="active" (click)="scrollTop()">Favorites</a>
   </nav>
 
-  <button class="settings-button" type="button" aria-label="Open settings" (click)="toggleSettings()">
-    <img src="assets/images/cog.svg" alt="">
-  </button>
+  <div class="header-actions">
+    <ng-container *ngIf="authReady()">
+      <ng-container *ngIf="isLoggedIn(); else signIn">
+        <a class="account-link" routerLink="/profile" routerLinkActive="active" [title]="displayName()">
+          <span class="avatar" aria-hidden="true">{{ displayName().charAt(0).toUpperCase() }}</span>
+          <span class="account-name">{{ displayName() }}</span>
+        </a>
+        <button class="header-button" type="button" (click)="logout()">Sign out</button>
+      </ng-container>
+      <ng-template #signIn>
+        <a class="header-button" routerLink="/login" routerLinkActive="active">Sign in</a>
+      </ng-template>
+    </ng-container>
+
+    <button class="settings-button" type="button" aria-label="Open settings" (click)="toggleSettings()">
+      <img src="assets/images/cog.svg" alt="">
+    </button>
+  </div>
 </header>
 <app-settings *ngIf="settings().showSettings"></app-settings>

@@ -87,3 +87,18 @@
     line-height: 1.4;
   }
 }
+
+.favorite {
+  padding: 0;
+  border: 0;
+  color: var(--muted-color);
+  background: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    color: var(--accent-color);
+  }
+}

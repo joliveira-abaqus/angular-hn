@@ -1,0 +1,27 @@
+<main class="profile-page" *ngIf="user() as user">
+  <section class="profile-card" aria-labelledby="profile-title">
+    <span class="eyebrow">Hacker News · Account</span>
+    <h1 id="profile-title">{{ displayName() }}</h1>
+
+    <dl class="details">
+      <div>
+        <dt>Email</dt>
+        <dd>{{ user.email }}</dd>
+      </div>
+      <div *ngIf="user.metadata.creationTime">
+        <dt>Member since</dt>
+        <dd>{{ user.metadata.creationTime | date: 'mediumDate' }}</dd>
+      </div>
+      <div *ngIf="user.metadata.lastSignInTime">
+        <dt>Last sign-in</dt>
+        <dd>{{ user.metadata.lastSignInTime | date: 'medium' }}</dd>
+      </div>
+      <div>
+        <dt>Favorites</dt>
+        <dd><a routerLink="/favorites">{{ favorites().length }} saved stories</a></dd>
+      </div>
+    </dl>
+
+    <button class="logout" type="button" (click)="logout()">Sign out</button>
+  </section>
+</main>
