@@ -4,7 +4,10 @@
 /dist
 /tmp
 /out-tsc
-/.angular/cache
+/dev-dist
+/playwright-report
+/test-results
+/blob-report
 *.tsbuildinfo
 # Only exists if Bazel was run
 /bazel-out
