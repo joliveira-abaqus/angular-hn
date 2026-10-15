@@ -34,6 +34,16 @@ describe('hackernews api', () => {
         expect(story.poll_votes_count).toBe(16);
     });
 
+    it('fetchItemContent mostra o poll mesmo se uma opção falhar', async () => {
+        const poll = makeStory({ id: 200, type: 'poll', poll: [{}, {}] as never });
+        mockApi({ '/item/200': poll, '/item/201': { points: 7, content: 'A' } });
+
+        const story = await fetchItemContent(200);
+
+        expect(story.poll[0]).toEqual({ points: 7, content: 'A' });
+        expect(story.poll_votes_count).toBe(7);
+    });
+
     it('fetchItemContent não busca opções para items que não são poll', async () => {
         const fetchMock = mockApi({ '/item/1': makeStory() });
         const story = await fetchItemContent(1);

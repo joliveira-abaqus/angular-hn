@@ -37,7 +37,7 @@
   }
 
   // Só os parágrafos do template; o HTML dos comentários/conteúdo mantém o estilo padrão.
-  .item > div > p {
+  .item > div > p:not(.title-block) {
     margin: 2px 0;
   }
 

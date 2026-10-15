@@ -47,6 +47,14 @@ test('abre um item com comentários aninhados e colapsa a thread', async ({ page
     await expect(page.getByText('Resposta aninhada')).toBeVisible();
 });
 
+test('no mobile o título do item não fica sob o botão de voltar', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.goto('/item/1');
+    const back = await page.locator('.mobile .back-button').boundingBox();
+    const title = await page.locator('.mobile .title-block').boundingBox();
+    expect(title!.x).toBeGreaterThanOrEqual(back!.x + back!.width);
+});
+
 test('mostra a contagem de votos de um poll', async ({ page }) => {
     await page.goto('/item/500');
     await expect(page.getByText('30 points')).toBeVisible();

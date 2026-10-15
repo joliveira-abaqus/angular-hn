@@ -33,11 +33,15 @@ export function fetchPollContent(id: number, signal?: AbortSignal): Promise<Poll
 export async function fetchItemContent(id: number, signal?: AbortSignal): Promise<Story> {
     const story = await getJson<Story>(`${BASE_URL}/item/${id}`, signal);
     if (story.type === 'poll' && story.poll_votes_count === undefined) {
-        const options = await Promise.all(
+        // Como no app Angular, uma opção que falhar não impede a exibição do poll.
+        const results = await Promise.allSettled(
             story.poll.map((_, i) => fetchPollContent(story.id + i + 1, signal))
         );
-        story.poll = options;
-        story.poll_votes_count = options.reduce((total, option) => total + option.points, 0);
+        story.poll = results.map((result, i) => (result.status === 'fulfilled' ? result.value : story.poll[i]));
+        story.poll_votes_count = results.reduce(
+            (total, result) => total + (result.status === 'fulfilled' ? result.value.points : 0),
+            0
+        );
     }
     return story;
 }
